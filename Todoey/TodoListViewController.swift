@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController { //tableview controller used here instead of UIcontroller
     
-    let itemArray = ["Liverpool","Chelsea","Arsenal"]
+    var itemArray = ["Liverpool","Chelsea","Arsenal"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,41 @@ class TodoListViewController: UITableViewController { //tableview controller use
         }
         tableView.deselectRow(at: indexPath, animated: true)
         
-       // print(itemArray[indexPath.row]) // when a cell is selected it will print the corresponding cell
+        // print(itemArray[indexPath.row]) // when a cell is selected it will print the corresponding cell
     }
+    
+    
+    // MARK - ADD New Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField =  UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todey Item", message: "",
+                                      preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style:  .default) { (action) in
+            // what will happend once the user clicked the Add Item button on our UIAlert
+            
+            self.itemArray.append(textField.text!)
+            
+            self.tableView.reloadData() // reloads the tableView after data has been appended
+
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField //alertTextField can now be accessed outside the closure
+            
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
     
 }
 
